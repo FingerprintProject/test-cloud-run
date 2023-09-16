@@ -6,7 +6,7 @@ steps:
       - "asia-southeast1-docker.pkg.dev/$PROJECT_ID/ml-docker-repo/laravel_test:latest"
       - .
       - "-f"
-      - "./docker/dockerfile.php"
+      - "./docker/dockerfile"
     id: Build
 
   - name: gcr.io/cloud-builders/docker
@@ -19,11 +19,50 @@ steps:
     args:
       - run
       - deploy
-      - fingperint-server
+      - laravel-test
       - --image=asia-southeast1-docker.pkg.dev/machine-learning-399007/ml-docker-repo/laravel_test:latest
-      - --region=$asia-southeast1
+      - --region=asia-southeast1
       - --platform=managed
       - --allow-unauthenticated
-
+      - --set-env-vars
+      - "APP_NAME=Laravel"
+      - --set-env-vars
+      - "APP_ENV=local"
+      - --set-env-vars
+      - "APP_KEY=base64:J9cM7h7PteeakGhqfWNSu2ZYQx4v4Qu6rBEyQKmqm9g="
+      - --set-env-vars
+      - "APP_DEBUG=true"
+      - --set-env-vars
+      - "APP_URL=http://localhost"
+      - --set-env-vars
+      - "LOG_CHANNEL=stack"
+      - --set-env-vars
+      - "LOG_DEPRECATIONS_CHANNEL=null"
+      - --set-env-vars
+      - "LOG_LEVEL=debug"
+      - --set-env-vars
+      - "DB_CONNECTION=mysql"
+      - --set-env-vars
+      - "DB_HOST=127.0.0.1"
+      - --set-env-vars
+      - "DB_PORT=3306"
+      - --set-env-vars
+      - "DB_DATABASE=laravel"
+      - --set-env-vars
+      - "DB_USERNAME=root"
+      - --set-env-vars
+      - "DB_PASSWORD=fDaFSkwoqWJ76L"
+      - --set-env-vars
+      - "BROADCAST_DRIVER=log"
+      - --set-env-vars
+      - "CACHE_DRIVER=file"
+      - --set-env-vars
+      - "FILESYSTEM_DISK=local"
+      - --set-env-vars
+      - "QUEUE_CONNECTION=sync"
+      - --set-env-vars
+      - "SESSION_DRIVER=file"
+      - --set-env-vars
+      - "SESSION_LIFETIME=120"
 images:
   - "asia-southeast1-docker.pkg.dev/$PROJECT_ID/ml-docker-repo/laravel_test:latest"
