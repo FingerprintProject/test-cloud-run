@@ -1,26 +1,10 @@
 steps:
-  - name: gcr.io/cloud-builders/docker
-    args:
-      - build
-      - "-t"
-      - "asia-southeast1-docker.pkg.dev/$PROJECT_ID/ml-docker-repo/laravel_test:latest"
-      - .
-      - "-f"
-      - "./docker/dockerfile"
-    id: Build
-
-  - name: gcr.io/cloud-builders/docker
-    args:
-      - push
-      - "asia-southeast1-docker.pkg.dev/$PROJECT_ID/ml-docker-repo/laravel_test:latest"
-    id: Push
-
   - name: gcr.io/cloud-builders/gcloud
     args:
       - run
       - deploy
       - laravel-test
-      - --image=gcr.io/machine-learning-399007/ml-docker-repo/laravel_test:latest
+      - --image=asia-southeast1-docker.pkg.dev/machine-learning-399007/ml-docker-repo/laravel_test:latest
       - --region=asia-southeast1
       - --platform=managed
       - --allow-unauthenticated
@@ -64,5 +48,3 @@ steps:
       - "SESSION_DRIVER=file"
       - --set-env-vars
       - "SESSION_LIFETIME=120"
-images:
-  - "asia-southeast1-docker.pkg.dev/$PROJECT_ID/ml-docker-repo/laravel_test:latest"
